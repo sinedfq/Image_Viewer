@@ -11,12 +11,14 @@
 
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -29,6 +31,8 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *action;
+    QAction *action_2;
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
     QFrame *menuFrame;
@@ -50,6 +54,7 @@ public:
     QPushButton *sortUpButton;
     QLabel *imageLabel;
     QMenuBar *menubar;
+    QMenu *menu;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -62,6 +67,10 @@ public:
         QIcon icon;
         icon.addFile(QString::fromUtf8("../../Downloads/ic_photo_album_128_28567.ico"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
+        action = new QAction(MainWindow);
+        action->setObjectName(QString::fromUtf8("action"));
+        action_2 = new QAction(MainWindow);
+        action_2->setObjectName(QString::fromUtf8("action_2"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);
@@ -186,10 +195,16 @@ public:
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 1916, 26));
+        menu = new QMenu(menubar);
+        menu->setObjectName(QString::fromUtf8("menu"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
+
+        menubar->addAction(menu->menuAction());
+        menu->addAction(action);
+        menu->addAction(action_2);
 
         retranslateUi(MainWindow);
 
@@ -199,6 +214,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Image Viewer", nullptr));
+        action->setText(QApplication::translate("MainWindow", "\320\230\320\275\321\204\320\276", nullptr));
+        action_2->setText(QApplication::translate("MainWindow", "\320\240\320\260\320\267\321\200\320\260\320\261\320\276\321\202\321\207\320\270\320\272", nullptr));
         textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -215,6 +232,7 @@ public:
         sortDownButton->setText(QApplication::translate("MainWindow", "\320\241\320\275\320\260\321\207\320\260\320\273\320\260 \320\275\320\276\320\262\321\213\320\265", nullptr));
         sortUpButton->setText(QApplication::translate("MainWindow", "\320\241\320\275\320\260\321\207\320\260\320\273\320\260 \321\201\321\202\320\260\321\200\321\213\320\265", nullptr));
         imageLabel->setText(QString());
+        menu->setTitle(QApplication::translate("MainWindow", "\320\237\320\276\320\274\320\276\321\211\321\214", nullptr));
     } // retranslateUi
 
 };
