@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->addPhotoButton, SIGNAL(clicked()), this, SLOT(on_addPhotoButton_clicked()));
-    connect(ui->createDatabaseButton, SIGNAL(clicked()), this, SLOT(on_createDatabaseButton_clicked()));
+    connect(ui->createDatabaseButton, SIGNAL(click()), this, SLOT(on_createDatabaseButton_clicked()));
     connect(ui->nextPhotoButton, &QPushButton::click, this, &MainWindow::on_nextPhotoButton_clicked);
     connect(ui->prevPhotoButton, SIGNAL(click()), this, SLOT(on_prevPhotoButton_clicked()));
     connect(ui->deletePhotoButton, SIGNAL(clicked()), this, SLOT(on_deletePhotoButton_clicked()));
@@ -494,6 +494,15 @@ void MainWindow::on_createDatabaseButton_clicked()
 
 void MainWindow::createDatabase(const QString &dbName)
 {
+    // Проверяем размер имени базы данных
+    if (dbName.length() > 30) {
+        QMessageBox::warning(this, tr("Предупреждение"), tr("Название базы данных должно быть менее 30 символов."));
+        // Заново запрашиваем имя базы данных
+        // Например, вызываем метод для ввода имени базы данных
+        // inputDatabaseName();
+        return;
+    }
+
     // Получаем путь к папке Debug
     QString debugPath = QCoreApplication::applicationDirPath();
     QString dbPath = debugPath + "/" + dbName + ".db";
